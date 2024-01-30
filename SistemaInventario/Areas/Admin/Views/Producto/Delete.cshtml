@@ -1,0 +1,19 @@
+﻿@model SistemaInventario.Modelos.Producto
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<form method="post">
+
+    <h2>Eliminar producto</h2>
+
+    <p>¿Estás seguro de que deseas eliminar el Producto?</p>
+    <button id="Btn" class="btn btn-danger" asp-route-id="@Model.Id" asp-action="DeleteConfirm"><i class="bi bi-trash3-fill">Eliminar</i> </button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+   

@@ -1,0 +1,9 @@
+﻿
+@model int
+
+@* le paso el id con el @Model *@
+
+<div class="d-grid gap-2 d-md-block">
+    <button type="submit" class="btn btn-primary"  asp-route-id="@Model"> <i class="bi bi-pen"></i> Actualizar</button>
+    <a asp-action="Index" class="btn btn-success"> <i class="bi bi-caret-left-square"></i>  Volver</a>
+</div>

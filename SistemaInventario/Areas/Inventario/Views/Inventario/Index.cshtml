@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<SistemaInventario.Modelos.DepositoProducto>
+
+
+
+<div class="row">
+    <div class="col-lg-12 text-lg-center">
+        <h2 class="text-dark">Stock de productos</h2>
+    </div>
+
+    <div class="col-lg-12 text-lg-end">
+        <a class="btn btn-primary" asp-action="NuevoInventario"> <i class="bi bi-plus-square"></i> Crear nuevo inventario</a>
+        <a class="btn btn-primary" asp-action="KardexProducto">Kardex</a>
+    </div>
+</div>
+
+
+
+<br />
+
+<div class="p-4 border rounded bg-gradient">
+    <table id="tabla" class="table table-responsive table-hover" cellspacing="0" style="width:100%">
+        <thead class="table-dark">
+            <tr>
+                <th>Depósito</th>
+                <th>Producto</th>
+                <th>Costo</th>
+                <th>Cantidad</th>
+                @* agregar columna, que es en Data Id, no se ve van los iconos *@
+               
+            </tr>
+        </thead>
+
+        @foreach (var dp in Model)
+        {
+            <tr>
+                <td>@dp.Deposito.Nombre</td>
+                <td>@dp.Producto.Descripcion</td>
+                <td>@dp.Producto.Costo</td>
+                <td>@dp.Cantidad</td> 
+            </tr>
+        }
+
+
+    </table>
+
+</div>
+

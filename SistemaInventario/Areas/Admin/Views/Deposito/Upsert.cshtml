@@ -1,0 +1,82 @@
+﻿@model SistemaInventario.Modelos.Deposito
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string titulo = "Crear depósito";
+}
+
+
+<form method="post">
+
+    <div class="col-md-6">
+
+        <divc class="row border-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </divc>
+
+
+
+        @if (Model.Id != 0)
+        {
+            titulo = "Actualizar depósito";
+            <input type="hidden" asp-for="Id" />
+        }
+
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2>
+        </div>
+        <br />
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Nombre</label>
+            <input type="text" asp-for="Nombre"  class="form-control" id="formGroupExampleInput" placeholder="Ingrese el nombre">
+           <span asp-validation-for="Nombre" class="text-danger"/>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2"  class="form-label">Descripción</label>
+            <textarea type="text" asp-for="Descripcion" class="form-control" id="formGroupExampleInput2" rows="3" placeholder="Ingrese la descripción"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger" />
+        </div>
+
+        <div class="mb-3">
+
+            <div class="form-group" >
+                <label>Estado</label>
+                <select asp-for="Estado" class="form-select">
+                    <option value=true>Activo</option>
+                    <option value=false>Inactivo</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+
+            
+           @*  <div class="form-check">
+                <label for="formGroupExampleInput2" class="form-label">Estado</label>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" asp-for="Estado">
+                <label class="form-check-label" for="flexCheckDefault">Activo</label>
+                <span asp-validation-for="Estado" class="text-danger" />
+            </div> *@
+
+
+        </div>
+        <br />
+        <div>
+            @if (Model.Id != 0)
+            {
+                <partial name="_BotonesActualizarRegresar" model="Model.Id" />
+            }
+            else
+            {
+                <partial name="_BotonesCrearRegresar" model="Model.Id" />
+            }
+        </div>
+
+
+    </div>
+
+</form>
+
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+     }

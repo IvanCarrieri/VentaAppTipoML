@@ -1,0 +1,30 @@
+﻿@using SistemaInventario.Utilidades
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
+
+@if (TempData[DefinicionesEstaticas.Exitosa] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  
+    
+    <script type="text/javascript"> 
+        toastr.success('@TempData[DefinicionesEstaticas.Exitosa]');
+     </script>
+
+}
+
+@if (TempData[DefinicionesEstaticas.Error] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+   
+    <script type="text/javascript">
+        toastr.error('@TempData[DefinicionesEstaticas.Error]');
+    </script>
+
+}
+
+
+

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<SistemaInventario.Modelos.Deposito>
+
+
+
+<div class="row">
+    <div class="col-lg-12 text-lg-start">
+        <h2 class="text-dark">Lista de depósitos</h2>
+    </div>
+
+    <div class="col-lg-12 text-lg-center">
+        <a class="btn btn-primary" asp-action="Upsert" role="button"> <i class="bi bi-plus-square"></i> Crear nuevo depósito</a>
+    </div>
+</div>
+
+
+ 
+<br />
+
+<div class="p-4 border rounded bg-gradient">
+    <table id ="tabla" class="table table-responsive table-hover " cellspacing="0" style="width:100%">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                @* agregar columna, que es en Data Id, no se ve van los iconos *@
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach(var deposito in Model)
+        {
+            <tr>
+                <td>@deposito.Nombre</td>
+                <td>@deposito.Descripcion</td>
+                <td>@(deposito.Estado ? "Activo" : "Inactivo")</td>
+                <td>
+                    <div class="text-center">
+                        <a href="/Admin/Deposito/Upsert/@deposito.Id" class="btn btn-success text-white">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="/Admin/Deposito/Delete/@deposito.Id" class="btn btn-danger text-white">
+                            <i class="bi bi-trash3-fill"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+
+
+    </table>
+    
+</div>
+

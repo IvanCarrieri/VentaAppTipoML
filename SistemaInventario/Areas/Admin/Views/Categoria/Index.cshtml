@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<SistemaInventario.Modelos.Categoria>
+
+
+
+<div class="row">
+    <div class="col-lg-12 text-lg-center">
+        <h2 class="text-dark">Lista de categorías</h2>
+    </div>
+
+    <div class="col-lg-12 text-lg-end">
+        <a class="btn btn-primary" asp-action="Upsert" role="button"> <i class="bi bi-plus-square"></i> Crear nueva categoría</a>
+    </div>
+</div>
+
+
+
+<br />
+
+<div class="p-4 border rounded bg-gradient">
+    <table id="tabla" class="table table-responsive table-hover" cellspacing="0" style="width:100%">
+        <thead class="table-dark">
+            <tr>
+                @* cabeceras de las columnmas *@
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach(var categoria in Model)
+        {
+            <tr>
+                <td>@categoria.Nombre</td>
+                <td>@categoria.Descripcion</td>
+                <td>@(categoria.Estado ? "Activo" : "Inactivo")</td>
+                <td>
+                    <div class="text-center">
+                        <a href="/Admin/Categoria/Upsert/@categoria.Id" class="btn btn-success text-white">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="/Admin/Categoria/Delete/@categoria.Id" class="btn btn-danger text-white">
+                            <i class="bi bi-trash3-fill"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+
+
+    </table>
+    
+</div>
+

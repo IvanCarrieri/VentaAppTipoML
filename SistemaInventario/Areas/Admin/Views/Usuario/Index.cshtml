@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<SistemaInventario.Modelos.Usuario>
+
+
+    <div class="container">
+<div class="row">
+    <div class="col-lg-12 text-lg-center">
+        <h2 class="text-dark">Lista de Usuarios</h2>
+    </div>
+
+    <div class="col-lg-12 text-lg-end">
+        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">
+            <i class="bi bi-plus-square"></i> Crear un nuevo usuario
+        </a>
+    </div>
+</div>
+</div>
+
+
+<br />
+
+<div class="p-4 border rounded bg-gradient">
+    <table id="tabla" class="table table-responsive table-hover" cellspacing="0" style="width:100%">
+        <thead class="table-dark">
+            <tr>
+                <th>Email</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Teléfono</th>
+                <th>Role</th>
+                @* agregar columna, que es en Data Id, no se ve van los iconos *@
+                <th></th>
+            </tr>
+        </thead>
+
+
+
+        @foreach (var u in Model)
+        {
+
+
+            <tr>
+                <td>@u.Email</td>
+                <td>@u.Nombres</td>
+                <td>@u.Apellidos</td>
+                <td>@u.PhoneNumber</td>
+                <td>@u.Role</td>
+                <td>
+
+
+
+                    @if (u.LockoutEnd > DateTime.Now)
+                    {
+                       
+
+
+                        <div class="text-center">
+                            <form method="post" action="/Admin/Usuario/BloquearDesbloquear">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@u.Id" />
+                                <button type="submit" class="btn btn-danger text-white">
+                                    <i class="bi bi-unlock-fill"></i>Desbloquear
+                                </button>
+                            </form>
+                        </div> 
+
+                    }
+                    else
+                    {
+                       
+
+                        <div class="text-center">
+                            <form method="post" action="/Admin/Usuario/BloquearDesbloquear">
+                                @Html.AntiForgeryToken()    
+                                <input type="hidden" name="id" value="@u.Id" />
+                                <button type="submit" class="btn btn-success text-white">
+                                    <i class="bi bi-lock-fill"></i>Bloquear
+                                </button>
+                            </form>
+                        </div>
+                    }
+                    @* usar esto cuando hay un form  @Html.AntiForgeryToken() *@
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+</div>
+
+
+@* 
+    
+ <div class="text-center">
+          <a href="/Admin/Usuario/BloquearDesbloquear/@u.Id" class="btn btn-danger text-white">
+              <i class="bi bi-unlock-fill"></i>>Desbloquear
+          </a>
+      </div>
+
+
+
+Ambas opciones son válidas y pueden funcionar en diferentes situaciones. Aquí hay una explicación de las diferencias y por qué elegir una sobre la otra en ciertos casos:
+
+Formulario HTML con método POST:
+
+Cuando utilizas un formulario HTML con el método POST, estás indicando explícitamente que estás enviando datos al servidor para procesarlos. Esto es adecuado cuando necesitas enviar datos, como el ID de un usuario,
+que no deseas que estén visibles en la URL o que pueden ser modificados fácilmente.
+Este enfoque también es útil si necesitas enviar datos adicionales junto con la solicitud, como datos de formulario adicionales.
+En este caso, al usar un formulario con un método POST, estás asegurando que los datos se envíen al servidor de manera segura y que solo se pueda acceder a ellos a través de la solicitud POST.
+Enlace <a>
+    con método GET:
+
+   Cuando usas un enlace <a>
+  con un método GET, estás generando una solicitud GET, que es útil cuando simplemente deseas navegar a una URL específica o realizar una acción que no requiere enviar datos al servidor.
+ Este enfoque es más comúnmente utilizado para la navegación entre páginas o para realizar acciones que no tienen un impacto en los datos del servidor.
+  Sin embargo, en este caso, como mencionaste anteriormente, estás enviando un ID en la URL, lo que podría no ser ideal si deseas ocultar ese dato o evitar que sea modificado fácilmente por el usuario.
+ En resumen, si necesitas enviar datos al servidor, especialmente datos sensibles como IDs de usuario,
+  es preferible utilizar un formulario HTML con el método POST. Si simplemente estás realizando una navegación o una acción que no involucra enviar datos al servidor, entonces un enlace <a> con método GET podría ser más adecuado.
+   En tu caso, como estás enviando el ID del usuario al servidor para realizar una acción específica, el formulario con método POST es la opción más apropiada. *@
+
+

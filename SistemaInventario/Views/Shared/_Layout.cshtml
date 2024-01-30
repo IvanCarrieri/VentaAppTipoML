@@ -1,0 +1,183 @@
+﻿@using SistemaInventario.Utilidades
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SistemaInventario</title>
+    <link rel="shortcut icon" href="~/Imagenes/icon.ico" />
+
+
+    @*  cargar este jquery primero de todo *@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    @* boostrap css *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+
+    @*  toast css *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
+
+    @* icon css *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    @* datatable css *@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+
+    @* estilos personalizados *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SistemaInventario.styles.css" asp-append-version="true" />
+
+    @* fuentes *@
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+    <link href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+   
+
+</head>
+<body style="background-color:lightcyan">
+    <header class="header">
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-tertiary border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="https://img.icons8.com/fluency/96/online-shopping.png" /> </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item" >
+                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+
+                        @* dropdowns *@
+
+                        @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin) || User.IsInRole(DefinicionesEstaticas.RoleInventario))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Contenido
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @* con los tag-helpers le indicamos a que AREA debe ir, al CONTROLADOR que debe IR y a la ACCION que debe ir *@
+                                    @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin))
+                                    {
+                                        <li><a class="dropdown-item" asp-area="Admin" asp-controller="Deposito" asp-action="Index">Depósitos</a></li>
+                                        <li><a class="dropdown-item" asp-area="Admin" asp-controller="Categoria" asp-action="Index">Categorías</a></li>
+                                        <li><a class="dropdown-item" asp-area="Admin" asp-controller="Marca" asp-action="Index">Marcas</a></li>
+                                        <li><a class="dropdown-item" asp-area="Admin" asp-controller="Empresa" asp-action="Upsert">Empresa</a></li>
+                                    }
+
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Producto" asp-action="Index">Productos</a></li>
+
+                                </ul>
+                            </li>
+
+
+                        }
+
+                        @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Usuario
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @* con los tag-helpers le indicamos a que AREA debe ir, al CONTROLADOR que debe IR y a la ACCION que debe ir *@
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Usuario" asp-action="Index">Usuarios</a></li>
+
+                                </ul>
+                            </li>
+                        }
+
+                        @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin) || User.IsInRole(DefinicionesEstaticas.RoleInventario))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Inventario
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @* con los tag-helpers le indicamos a que AREA debe ir, al CONTROLADOR que debe IR y a la ACCION que debe ir *@
+                                    <li><a class="dropdown-item" asp-area="Inventario" asp-controller="Inventario" asp-action="Index">Stock de productos</a></li>
+
+                                </ul>
+                            </li>
+                        }
+
+
+                        @if(httpContextAccessor.HttpContext.Session.GetInt32(DefinicionesEstaticas.SesionCarrito) != null)
+                        {
+                            <li>
+                                <a asp-area="Inventario" asp-action="Index" asp-controller="Carrito" class="nav-link">
+                                    @{
+                                        var numeroProductos =  httpContextAccessor.HttpContext.Session.GetInt32(DefinicionesEstaticas.SesionCarrito);
+                                    }
+                                    <i class="bi bi-cart-fill text-black"> &nbsp;(@numeroProductos) </i>
+                                </a>
+
+                                
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a class="nav-link" href="#">
+                                    <i class="bi bi-cart-fill text-black"> &nbsp;(0) </i>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <partial name="_Notificaciones" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - SistemaInventario - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/tabla.js" asp-append-version="true"></script>
+
+    <script src="~/lib/select2/js/select2.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

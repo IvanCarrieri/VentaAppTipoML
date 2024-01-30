@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model IEnumerable<SistemaInventario.Modelos.Producto>
+
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-lg-12 text-lg-start">
+        <h2 class="text-dark">Lista de Productos</h2>
+    </div>
+
+    <div class="col-lg-12 text-lg-center">
+        <a class="btn btn-primary" asp-action="Upsert" role="button"> <i class="bi bi-plus-square"></i> Crear nuevo producto</a>
+    </div>
+</div>
+</div>
+
+<br />
+
+<div class="p-4 border rounded bg-gradient">
+    <table id="tabla" class="table table-responsive table-hover" cellspacing="0" style="width:100%">
+        <thead class="table-dark">
+            <tr>
+                <th>Número de serie</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Marca</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                @* agregar columna, que es en Data Id, no se ve van los iconos *@
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach(var producto in Model)
+        {
+            <tr>
+                <td>@producto.NumeroSerie</td>
+                <td>@producto.Descripcion</td>
+                <td>@producto.Categoria.Nombre</td>
+                <td>@producto.Marca.Nombre</td>
+                <td>@producto.Precio</td>
+                <td>@(producto.Estado ? "Activo" : "Inactivo")</td>
+                <td>
+
+                   
+                    <div class="text-center">
+
+                      @*   <a href="@Url.Action("Upsert", new { id = producto.Id })" class="btn btn-success text-white">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>  o tambien :   *@
+
+                        <a href="/Admin/Producto/Upsert/@producto.Id" class="btn btn-success text-white">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+
+                        <a href="/Admin/Producto/Delete/@producto.Id" class="btn btn-danger text-white">
+                            <i class="bi bi-trash3-fill"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+
+
+    </table>
+    
+</div>
+

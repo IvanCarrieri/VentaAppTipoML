@@ -1,0 +1,100 @@
+﻿@model IEnumerable<SistemaInventario.Modelos.Producto>
+@using SistemaInventario.Utilidades
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<header class="header2">
+    <div class="container pt-sm-5">
+        <div class="heading-primary">
+            Bienvenidos a nuestra tienda. <br />
+            Los mejores productros los encontrarás aquí.
+        </div>
+    </div>
+</header>
+
+<br />
+
+<section>
+
+    <div class="row col-lg-6 col-md-6 col-sm-6 d-flex" style="margin-left: 150px; margin-right: 150px;">
+
+        <div class="input-group mb-3">
+            <input id="search" type="text" class="form-control" value="@ViewBag.Busqueda" placeholder="Buscar" arial-label="Buscar" aria-describedby="button-addon2" />
+            <button class="btn btn-outline-primary" onclick="buscar()">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+
+    </div>
+
+
+
+    <div class="row" style="margin-left: 150px; margin-right: 150px;">
+
+        @foreach (var producto in ViewBag.Productos)
+        {
+
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+                <div class="card w-100 my-2">
+                    <img src="@DefinicionesEstaticas.ImagenRuta@producto.ImagenUrl" class="card-img-top" style="aspect-ratio: 1/1" />
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@producto.Descripcion</h5>
+                        <p class="card-text">$ @String.Format("{0:#,##0.000}", producto.Precio)</p>
+                        <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto bg-white ">
+                            <a asp-action="Detalle" asp-route-id="@producto.Id" class="btn btn-outline-primary">
+                                <i class="bi bi-ticket-detailed"> Detalle</i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+
+
+
+    <div class="row" style="margin-left: 150px; margin-right: 150px;">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+
+                <li class="page-item @(ViewBag.Pagina == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pagina = ViewBag.Pagina - 1 })">Anterior</a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == ViewBag.Pagina ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { pagina = i })">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(ViewBag.Pagina == ViewBag.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pagina = ViewBag.Pagina + 1 })">Siguiente</a>
+                </li>
+
+
+            </ul>
+        </nav>
+    </div>
+
+
+
+</section>
+
+
+<script>
+    function buscar() {
+        var busqueda = document.getElementById("search").value;
+        window.location.href = "@Url.Action("Index")?pagina=" + @ViewBag.Pagina + "&busqueda=" + busqueda;
+    }
+</script>
+
+

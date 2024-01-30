@@ -1,0 +1,139 @@
+﻿@model SistemaInventario.Modelos.InventarioVM
+@{
+    ViewData["Title"] = "DetalleInventario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container p-2">
+    <div class="card-header bg-dark text-light m-lg-0 row container">
+        <div class="col-6">
+            Agregar detalle inventario
+        </div>
+        <div class="col-6 text-end">
+            <a asp-action="Index" class="text-white" style="text-decoration:none;">Salir</a>
+        </div>
+    </div>
+
+
+    <form method="post" class="p-2">
+        @*  hidden para que no se vea en la vista  *@
+        <input asp-for="Inventario.Id" id="inventario.Id" name="inventarioId" hidden />
+
+        <div class="form-group mb-4">
+            <label>Depósito</label>
+            <input asp-for="Inventario.Deposito.Nombre" class="form-control" disabled />
+        </div>
+
+        <div class="row mb-2">
+            <div class="form-group col-md-3">
+                <label class="text-primary">Agregar detalle</label>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="form-group col-md-6 mb-2">
+                <select class="form-select" id="productoId" name="productoId">
+                </select>
+            </div>
+            <div class="form-group col-md-2 mb-2">
+                <input class="form-control text-end" placeholder="Cantidad" type="number" min="1" id="cantidadId" name="cantidadId" />
+            </div>
+            <div class="form-group col-md-2 mb-2">
+
+                <button class="btn btn-primary" onfocus="false" type="submit">Agregar</button>
+            </div>
+        </div>
+    </form>
+
+
+    <table id="tabla" class="table table-striped border">
+        <thead class="thead-dark">
+            <tr class="table-secondary thead-dark">
+                <th>Producto</th>
+                <th>Marca</th>
+                <th>Costo</th>
+                <th>Stock</th>
+                <th>Cantidad</th>
+
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.InventarioDetalles)
+        {
+            <tr>
+                <td>@item.Producto.Descripcion</td>
+                <td>@item.Producto.Marca.Nombre</td>
+                <td>@item.Producto.Costo</td>
+                <td>@item.StockAnterior.</td>
+                <td>@item.Cantidad</td>
+ 
+               @* Para enviar más parámetros al método "Mas", puedes utilizar el atributo asp-route- 
+                varias veces para especificar múltiples parámetros. Por ejemplo:
+                html Copy code:
+                <a class="btn btn-primary text-white" asp-action="Mas" asp-route-id="@item.Id" asp-route-parametro1="valor1" 
+                asp-route-parametro2="valor2"></a>
+                Donde "parametro1" y "parametro2" son los nombres de los parámetros que esperas recibir en tu método "Mas",
+                y "valor1" y "valor2" son los valores que deseas pasar para esos parámetros. 
+                Asegúrate de ajustar los nombres de los parámetros y los valores según corresponda a tu implementación específica.
+
+                 estos botones llaman a un metodo en el controlador, enviando un parametro: *@
+                <td>
+                    <a class="btn btn-primary text-white" asp-action="Mas" asp-route-id="@item.Id"><i class="bi bi-arrow-up-circle-fill"></i></a>
+
+                    <a class="btn btn-primary text-white" asp-action="Menos" asp-route-id="@item.Id"><i class="bi bi-arrow-down-circle-fill"></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    @if (Model.InventarioDetalles.Count() > 0)
+    {
+        <div class="align-content-center">
+           <div class="col-2">
+               <a class="btn btn-warning form-control" asp-action="GenerarStock" asp-route-Id="@Model.Inventario.Id">Generar stock</a>
+
+          </div>
+               
+        </div>
+    }
+
+</div>
+
+
+@* Para utilizar la libreria para la vista *@
+
+@section Scripts {
+
+    <script>
+        // Select 2
+
+        $("#productoId").select2({
+            placeholder: "Seleccionar Producto",
+            allowClear: true,
+            theme: "bootstrap-5",
+            ajax: {
+                url: "/Inventario/Inventario/BuscarProducto",
+                contentType: "application/json; charset=utf-8",
+                data: function (params) {
+                    var query =
+                    {
+                        term: params.term
+                    };
+                    return query;
+                },
+                processResults: function (result) {
+                    return {
+                        results: $.map(result, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.numeroSerie + ' ' + item.descripcion
+                            };
+                        })
+                    };
+                }
+            }
+        });
+
+    </script>
+
+}

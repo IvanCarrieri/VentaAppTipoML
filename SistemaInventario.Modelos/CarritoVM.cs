@@ -12,5 +12,9 @@ namespace SistemaInventario.Modelos
         public Producto Producto { get; set; }
         public int Stock { get; set; }
         public Carrito Carrito { get; set; }
+
+        public IEnumerable <Carrito> CarritoLista { get; set; }
+
+        public Orden Orden { get; set; }
     }
 }

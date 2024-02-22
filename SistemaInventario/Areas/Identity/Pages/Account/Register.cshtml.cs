@@ -164,7 +164,7 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
                     PhoneNumber = Input.NumeroTelefono,
                     Nombres = Input.Nombres,
                     Apellidos = Input.Apellidos,
-                    Dirección = Input.Direccion,
+                    Direccion = Input.Direccion,
                     Ciudad = Input.Ciudad,
                     Pais = Input.Pais,
                     Role = Input.Role,

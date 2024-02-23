@@ -37,7 +37,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
             {
                 var carritoLista = await unidadTrabajo.Carrito.ObtenerTodos(c => c.UsuarioId == usuario.Value);
                 var numeroProductos = carritoLista.Count();
-                HttpContext.Session.SetInt32(DefinicionesEstaticas.SesionCarrito, numeroProductos);
+                HttpContext.Session.SetInt32(DS.SesionCarrito, numeroProductos);
             }
 
 
@@ -136,15 +136,53 @@ namespace SistemaInventario.Areas.Inventario.Controllers
             }
 
             await unidadTrabajo.Guardar();
-            TempData[DefinicionesEstaticas.Exitosa] = "Producto agregado al carrito de compras";
+            TempData[DS.Exitosa] = "Producto agregado al carrito de compras";
 
             //agregar valor a la sesion
             var carritoLista = await unidadTrabajo.Carrito.ObtenerTodos(c => c.UsuarioId == usuario.Value);
             var numeroProductos = carritoLista.Count();
-            HttpContext.Session.SetInt32(DefinicionesEstaticas.SesionCarrito, numeroProductos);
+            HttpContext.Session.SetInt32(DS.SesionCarrito, numeroProductos);
 
 
             return RedirectToAction("Index");
+
+
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Comprar(CarritoVM carritoVM)
+        {
+            //asi se captura el usuario
+            var c = (ClaimsIdentity)User.Identity;
+            var usuario = c.FindFirst(ClaimTypes.NameIdentifier);
+            carritoVM.Carrito.UsuarioId = usuario.Value;
+
+            Carrito carroBD = await unidadTrabajo.Carrito.ObtenerPrimero(c => c.UsuarioId == usuario.Value && c.ProductoId == carritoVM.Carrito.ProductoId);
+
+            if (carroBD == null)
+            {
+                await unidadTrabajo.Carrito.Agregar(carritoVM.Carrito);
+            }
+            else
+            {
+                carroBD.Cantidad += carritoVM.Carrito.Cantidad;
+                unidadTrabajo.Carrito.Actualizar(carroBD);
+            }
+
+            await unidadTrabajo.Guardar();
+            TempData[DS.Exitosa] = "Producto agregado al carrito de compras";
+
+            //agregar valor a la sesion
+            var carritoLista = await unidadTrabajo.Carrito.ObtenerTodos(c => c.UsuarioId == usuario.Value);
+            var numeroProductos = carritoLista.Count();
+            HttpContext.Session.SetInt32(DS.SesionCarrito, numeroProductos);
+
+
+            return RedirectToAction("Index", "Carrito");
 
 
 

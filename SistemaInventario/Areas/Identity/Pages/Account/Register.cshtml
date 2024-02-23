@@ -60,7 +60,7 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
 
-                @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin))
+                @if (User.IsInRole(DS.RoleAdmin))
                 {
                      <div class="form-floating mb-3">
                          <lable asp-for="Input.Role">Rol</lable>

@@ -5,6 +5,7 @@ using SistemaInventario.AccesoDatos.Repositorios;
 using SistemaInventario.AccesoDatos.Repositorios.IRepositorios;
 using SistemaInventario.Data;
 using SistemaInventario.Utilidades;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +65,8 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.Configure<StripeConfig>(builder.Configuration.GetSection("Stripe"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,6 +83,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseRouting();
 

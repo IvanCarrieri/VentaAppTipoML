@@ -132,7 +132,7 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
 
                 Input = new InputModel()
                 {
-                    ListaRoles = _roleManager.Roles.Where(r => r.Name != DefinicionesEstaticas.RoleCliente).Select(n => n.Name).Select(l => new SelectListItem
+                    ListaRoles = _roleManager.Roles.Where(r => r.Name != DS.RoleCliente).Select(n => n.Name).Select(l => new SelectListItem
                     {
                         Text = l,
                         Value = l
@@ -150,7 +150,7 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
 
-            bool isAdmin = User.IsInRole(DefinicionesEstaticas.RoleAdmin);
+            bool isAdmin = User.IsInRole(DS.RoleAdmin);
 
 
             if (ModelState.IsValid)
@@ -181,24 +181,24 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if (!await _roleManager.RoleExistsAsync(DefinicionesEstaticas.RoleAdmin))
+                    if (!await _roleManager.RoleExistsAsync(DS.RoleAdmin))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole(DefinicionesEstaticas.RoleAdmin));
+                        await _roleManager.CreateAsync(new IdentityRole(DS.RoleAdmin));
                     }
 
-                    if (!await _roleManager.RoleExistsAsync(DefinicionesEstaticas.RoleCliente))
+                    if (!await _roleManager.RoleExistsAsync(DS.RoleCliente))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole(DefinicionesEstaticas.RoleCliente));
+                        await _roleManager.CreateAsync(new IdentityRole(DS.RoleCliente));
                     }
 
-                    if (!await _roleManager.RoleExistsAsync(DefinicionesEstaticas.RoleInventario))
+                    if (!await _roleManager.RoleExistsAsync(DS.RoleInventario))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole(DefinicionesEstaticas.RoleInventario));
+                        await _roleManager.CreateAsync(new IdentityRole(DS.RoleInventario));
                     }
 
                     if (user.Role == null)//el valor lo recibe desde el page
                     {
-                        await _userManager.AddToRoleAsync(user, DefinicionesEstaticas.RoleCliente);
+                        await _userManager.AddToRoleAsync(user, DS.RoleCliente);
                     }
                     else
                     {
@@ -243,7 +243,7 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
 
                 Input = new InputModel()
                 {
-                    ListaRoles = _roleManager.Roles.Where(r => r.Name != DefinicionesEstaticas.RoleCliente).Select(n => n.Name).Select(l => new SelectListItem
+                    ListaRoles = _roleManager.Roles.Where(r => r.Name != DS.RoleCliente).Select(n => n.Name).Select(l => new SelectListItem
                     {
                         Text = l,
                         Value = l

@@ -1162,3 +1162,4 @@ C:\Users\navim\Desktop\NET CORE\SistemaInventario\SistemaInventario\bin\Debug\ne
 C:\Users\navim\Desktop\NET CORE\SistemaInventario\SistemaInventario\bin\Debug\net7.0\Rotativa.AspNetCore.dll
 C:\Users\navim\Desktop\NET CORE\SistemaInventario\SistemaInventario\bin\Debug\net7.0\Rotativa\Windows\Rotativa\wkhtmltoimage.exe
 C:\Users\navim\Desktop\NET CORE\SistemaInventario\SistemaInventario\bin\Debug\net7.0\Rotativa\Windows\Rotativa\wkhtmltopdf.exe
+C:\Users\navim\Desktop\NET CORE\SistemaInventario\SistemaInventario\bin\Debug\net7.0\Stripe.net.dll

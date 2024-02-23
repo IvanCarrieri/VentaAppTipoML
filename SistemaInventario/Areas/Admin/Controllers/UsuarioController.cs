@@ -10,7 +10,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
 {
 
     [Area("Admin")]
-    [Authorize(Roles = DefinicionesEstaticas.RoleAdmin)]
+    [Authorize(Roles = DS.RoleAdmin)]
     public class UsuarioController : Controller
     {
 
@@ -58,7 +58,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
 
             if (usuario == null)
             {
-                TempData[DefinicionesEstaticas.Error] = "Error de usuario";
+                TempData[DS.Error] = "Error de usuario";
                 return View();
             }
             if(usuario.LockoutEnd != null && usuario.LockoutEnd > DateTime.Now)
@@ -71,7 +71,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
             }
 
             await unidadTrabajo.Guardar();
-            TempData[DefinicionesEstaticas.Exitosa] = "Operación exitosa";
+            TempData[DS.Exitosa] = "Operación exitosa";
             return RedirectToAction("Index");
         }
 

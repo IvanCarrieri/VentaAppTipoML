@@ -8,7 +8,7 @@ using SistemaInventario.Utilidades;
 namespace SistemaInventario.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = DefinicionesEstaticas.RoleAdmin)]
+    [Authorize(Roles = DS.RoleAdmin)]
     public class DepositoController : Controller
     {
 
@@ -62,7 +62,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
 
             Deposito deposito = await unidadTrabajo.Deposito.Obtener(id);
             unidadTrabajo.Deposito.Remover(deposito);
-            TempData[DefinicionesEstaticas.Exitosa] = "Depósito borrado exitosamente";
+            TempData[DS.Exitosa] = "Depósito borrado exitosamente";
             await unidadTrabajo.Guardar();
 
 
@@ -105,7 +105,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (await ValidarNombre(deposito.Nombre, deposito.Id))
                 {
 
-                    TempData[DefinicionesEstaticas.Error] = $"Error: existe un depósito con el nombre {deposito.Nombre}";
+                    TempData[DS.Error] = $"Error: existe un depósito con el nombre {deposito.Nombre}";
                     return View(deposito);
 
                 }
@@ -113,18 +113,18 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (deposito.Id == 0)
                 {
                     await unidadTrabajo.Deposito.Agregar(deposito);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Depósito creado exitosamente";
+                    TempData[DS.Exitosa] = "Depósito creado exitosamente";
                 }
                 else
                 {
                     unidadTrabajo.Deposito.Actualizar(deposito);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Depósito actualizado exitosamente";
+                    TempData[DS.Exitosa] = "Depósito actualizado exitosamente";
                 }
                 await unidadTrabajo.Guardar();
                 return RedirectToAction("Index");
 
             }
-            TempData[DefinicionesEstaticas.Error] = "Error al actualizar o crear Depósito";
+            TempData[DS.Error] = "Error al actualizar o crear Depósito";
             return View(deposito);
         }
 

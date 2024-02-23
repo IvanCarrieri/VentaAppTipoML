@@ -1,7 +1,7 @@
 ﻿@using SistemaInventario.Utilidades
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
 
-@if (TempData[DefinicionesEstaticas.Exitosa] != null)
+@if (TempData[DS.Exitosa] != null)
 {
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -9,19 +9,19 @@
   
     
     <script type="text/javascript"> 
-        toastr.success('@TempData[DefinicionesEstaticas.Exitosa]');
+        toastr.success('@TempData[DS.Exitosa]');
      </script>
 
 }
 
-@if (TempData[DefinicionesEstaticas.Error] != null)
+@if (TempData[DS.Error] != null)
 {
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
    
     <script type="text/javascript">
-        toastr.error('@TempData[DefinicionesEstaticas.Error]');
+        toastr.error('@TempData[DS.Error]');
     </script>
 
 }

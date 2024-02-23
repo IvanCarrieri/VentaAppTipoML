@@ -26,7 +26,7 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
-            HttpContext.Session.SetInt32(DefinicionesEstaticas.SesionCarrito, 0);
+            HttpContext.Session.SetInt32(DS.SesionCarrito, 0);
 
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");

@@ -8,7 +8,7 @@ using SistemaInventario.Utilidades;
 namespace SistemaInventario.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = DefinicionesEstaticas.RoleAdmin)]
+    [Authorize(Roles = DS.RoleAdmin)]
     public class CategoriaController : Controller
     {
 
@@ -55,7 +55,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
         {
             Categoria categoria = await unidadTrabajo.Categoria.Obtener(id);
             unidadTrabajo.Categoria.Remover(categoria);
-            TempData[DefinicionesEstaticas.Exitosa] = "Categoría borrada exitosamente";
+            TempData[DS.Exitosa] = "Categoría borrada exitosamente";
             await unidadTrabajo.Guardar();
 
             return RedirectToAction("Index");
@@ -93,7 +93,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (await ValidarNombre(categoria.Nombre, categoria.Id))
                 {
 
-                    TempData[DefinicionesEstaticas.Error] = $"Error: existe una categoría con el nombre {categoria.Nombre}";
+                    TempData[DS.Error] = $"Error: existe una categoría con el nombre {categoria.Nombre}";
                     return View(categoria);
 
                 }
@@ -101,12 +101,12 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (categoria.Id == 0)
                 {
                     await unidadTrabajo.Categoria.Agregar(categoria);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Categoría creada exitosamente";
+                    TempData[DS.Exitosa] = "Categoría creada exitosamente";
                 }
                 else
                 {
                     unidadTrabajo.Categoria.Actualizar(categoria);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Categoría actualizada exitosamente";
+                    TempData[DS.Exitosa] = "Categoría actualizada exitosamente";
                 }
 
 
@@ -114,7 +114,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            TempData[DefinicionesEstaticas.Error] = "Error al actualizar o crear Depósito";
+            TempData[DS.Error] = "Error al actualizar o crear Depósito";
             return View(categoria);
         }
 

@@ -9,7 +9,7 @@ using System.Security.Claims;
 namespace SistemaInventario.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = DefinicionesEstaticas.RoleAdmin)]
+    [Authorize(Roles = DS.RoleAdmin)]
     public class EmpresaController : Controller
     {
         private readonly IUnidadTrabajo unidadTrabajo;
@@ -61,7 +61,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                     empresaVM.Empresa.FechaActualizacion = DateTime.Now;
 
                     await unidadTrabajo.Empresa.Agregar(empresaVM.Empresa);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Empresa grabada con exito";
+                    TempData[DS.Exitosa] = "Empresa grabada con exito";
 
                 }
                 else //Actualizar Empresa
@@ -70,7 +70,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                     empresaVM.Empresa.FechaActualizacion = DateTime.Now;
 
                     unidadTrabajo.Empresa.Actualizar(empresaVM.Empresa);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Empresa grabada con exito";
+                    TempData[DS.Exitosa] = "Empresa grabada con exito";
                 }
 
                 await unidadTrabajo.Guardar();
@@ -78,7 +78,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
             }
 
 
-            TempData[DefinicionesEstaticas.Error] = "Error al grabar empresa";
+            TempData[DS.Error] = "Error al grabar empresa";
             return View(empresaVM);
 
         }

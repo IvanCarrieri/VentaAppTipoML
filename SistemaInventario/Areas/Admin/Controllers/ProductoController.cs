@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace SistemaInventario.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = DefinicionesEstaticas.RoleAdmin + "," + DefinicionesEstaticas.RoleInventario )]
+    [Authorize(Roles = DS.RoleAdmin + "," + DS.RoleInventario )]
     public class ProductoController : Controller
     {
 
@@ -86,7 +86,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                     //crear nuevo producto
 
                     //guardar imagen en aplicacion 
-                    string upload = webRuta + DefinicionesEstaticas.ImagenRuta;
+                    string upload = webRuta + DS.ImagenRuta;
                     string nombreArchivo = Guid.NewGuid().ToString();
                     string extension = Path.GetExtension(archivo[0].FileName);
 
@@ -101,7 +101,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                     productoVM.Producto.ImagenUrl = nombreArchivo + extension;
 
                     await unidadTrabajo.Producto.Agregar(productoVM.Producto);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Producto creado exitosamente";
+                    TempData[DS.Exitosa] = "Producto creado exitosamente";
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
 
                     if (archivo.Count > 0)
                     {
-                        string upload = webRuta + DefinicionesEstaticas.ImagenRuta;
+                        string upload = webRuta + DS.ImagenRuta;
                         string nombreArchivo = Guid.NewGuid().ToString();
                         string extension = Path.GetExtension(archivo[0].FileName);
 
@@ -137,7 +137,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                     }
 
                     unidadTrabajo.Producto.Actualizar(productoVM.Producto);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Producto actualizado exitosamente";
+                    TempData[DS.Exitosa] = "Producto actualizado exitosamente";
                 }
 
 
@@ -145,7 +145,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (await ValidarNumeroSerie(productoVM.Producto.NumeroSerie, productoVM.Producto.Id))
                 {
 
-                    TempData[DefinicionesEstaticas.Error] = $"Error: existe un producto con el número de serie {productoVM.Producto.NumeroSerie}";
+                    TempData[DS.Error] = $"Error: existe un producto con el número de serie {productoVM.Producto.NumeroSerie}";
                     return View(productoVM);
 
                 }
@@ -156,7 +156,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
             }
 
 
-            TempData[DefinicionesEstaticas.Error] = "Error al actualizar o crear un Producto";
+            TempData[DS.Error] = "Error al actualizar o crear un Producto";
             productoVM.CategoriasLista = unidadTrabajo.Producto.ObtenerTodosDropDownList("Categoria");
             productoVM.MarcasLista = unidadTrabajo.Producto.ObtenerTodosDropDownList("Marca");
             productoVM.PadresLista = unidadTrabajo.Producto.ObtenerTodosDropDownList("Producto");
@@ -214,7 +214,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
         {
             Producto producto = await unidadTrabajo.Producto.Obtener(id);
 
-            string upload = webHostEnvironment.WebRootPath + DefinicionesEstaticas.ImagenRuta;  //obtiene toda la ruta donde estan las imagenes
+            string upload = webHostEnvironment.WebRootPath + DS.ImagenRuta;  //obtiene toda la ruta donde estan las imagenes
             var archivo = Path.Combine(upload, producto.ImagenUrl);
 
             if(System.IO.File.Exists(archivo))
@@ -223,7 +223,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
             }
 
             unidadTrabajo.Producto.Remover(producto);
-            TempData[DefinicionesEstaticas.Exitosa] = "Producto borrado exitosamente";
+            TempData[DS.Exitosa] = "Producto borrado exitosamente";
             await unidadTrabajo.Guardar();
 
             return RedirectToAction("Index");

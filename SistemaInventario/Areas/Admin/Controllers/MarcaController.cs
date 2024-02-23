@@ -8,7 +8,7 @@ using SistemaInventario.Utilidades;
 namespace SistemaInventario.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = DefinicionesEstaticas.RoleAdmin)]
+    [Authorize(Roles = DS.RoleAdmin)]
     public class MarcaController : Controller
     {
 
@@ -55,7 +55,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
         {
             Marca marca = await unidadTrabajo.Marca.Obtener(id);
             unidadTrabajo.Marca.Remover(marca);
-            TempData[DefinicionesEstaticas.Exitosa] = "Marca borrada exitosamente";
+            TempData[DS.Exitosa] = "Marca borrada exitosamente";
             await unidadTrabajo.Guardar();
 
             return RedirectToAction("Index");
@@ -93,7 +93,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (await ValidarNombre(marca.Nombre, marca.Id))
                 {
 
-                    TempData[DefinicionesEstaticas.Error] = $"Error: existe una categoría con el nombre {marca.Nombre}";
+                    TempData[DS.Error] = $"Error: existe una categoría con el nombre {marca.Nombre}";
                     return View(marca);
 
                 }
@@ -101,12 +101,12 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (marca.Id == 0)
                 {
                     await unidadTrabajo.Marca.Agregar(marca);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Marca creada exitosamente";
+                    TempData[DS.Exitosa] = "Marca creada exitosamente";
                 }
                 else
                 {
                     unidadTrabajo.Marca.Actualizar(marca);
-                    TempData[DefinicionesEstaticas.Exitosa] = "Marca actualizada exitosamente";
+                    TempData[DS.Exitosa] = "Marca actualizada exitosamente";
                 }
 
 
@@ -114,7 +114,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            TempData[DefinicionesEstaticas.Error] = "Error al actualizar o crear Marca";
+            TempData[DS.Error] = "Error al actualizar o crear Marca";
             return View(marca);
         }
 

@@ -122,7 +122,7 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
                     var usuario = await unidadTrabajo.Usuario.ObtenerPrimero(u => u.UserName == Input.Email);
                     var carritoLista = await unidadTrabajo.Carrito.ObtenerTodos(u => u.UsuarioId == usuario.Id);
                     var numeroProductos = carritoLista.Count();
-                    HttpContext.Session.SetInt32(DefinicionesEstaticas.SesionCarrito, numeroProductos);
+                    HttpContext.Session.SetInt32(DS.SesionCarrito, numeroProductos);
 
 
                     _logger.LogInformation("User logged in.");

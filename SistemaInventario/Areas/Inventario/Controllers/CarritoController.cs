@@ -14,14 +14,19 @@ namespace SistemaInventario.Areas.Inventario.Controllers
        
 
         private readonly IUnidadTrabajo unidadTrabajo;
+        private string webUrl;
+
+
 
         [BindProperty]
         public CarritoVM carritoVM { get; set; }
 
 
-        public CarritoController(IUnidadTrabajo unidadTrabajo)
+        public CarritoController(IUnidadTrabajo unidadTrabajo, IConfiguration configuration)
         {
+           
             this.unidadTrabajo = unidadTrabajo;
+            webUrl = configuration.GetValue<string>("DomainUrls:WEB_URL:");
         }
 
         [Authorize]
@@ -81,7 +86,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
                 unidadTrabajo.Carrito.Remover(carrito);
                 await unidadTrabajo.Guardar();
                 //actualizo la sesion 
-                HttpContext.Session.SetInt32(DefinicionesEstaticas.SesionCarrito, numProductos - 1);
+                HttpContext.Session.SetInt32(DS.SesionCarrito, numProductos - 1);
 
             }
             else
@@ -116,7 +121,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
 
 
             //actualizo la sesion 
-            HttpContext.Session.SetInt32(DefinicionesEstaticas.SesionCarrito, numProductos - 1);
+            HttpContext.Session.SetInt32(DS.SesionCarrito, numProductos - 1);
 
            
             //esto es un metodo(funcion) no hace return view.
@@ -170,7 +175,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
                 if (item.Cantidad > producto.Cantidad)
                 {
 
-                    TempData[DefinicionesEstaticas.Error] = "La cantidad de producto " + item.Producto.Descripcion + " , excede al stock actual: " + producto.Cantidad;
+                    TempData[DS.Error] = "La cantidad de producto " + item.Producto.Descripcion + " , excede al stock actual: " + producto.Cantidad;
 
                     return RedirectToAction("Index");
                 }

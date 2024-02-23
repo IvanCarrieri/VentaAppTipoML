@@ -13,7 +13,7 @@
 
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <img src="@DefinicionesEstaticas.ImagenRuta@Model.Producto.ImagenUrl" class="img-fluid" alt="" />
+                    <img src="@DS.ImagenRuta@Model.Producto.ImagenUrl" class="img-fluid" alt="" />
                     <div class="row col-md-4 mb-4 mt-4">
                         <a asp-action="Index" class="btn btn-outline-primary ms-1">
                             Salir
@@ -57,12 +57,11 @@
                             <div class="form-outline me-1" style="width: 100px;">
                                 <input asp-for="Carrito.Cantidad" value="1" class="form-control" id="cantidadId" />
                             </div>
-                            <button type="submit" class="btn btn-primary ms-1" id="btnAgregar">
-                                Agregar al carro
+                            <button type="submit" class="btn btn-primary ms-1" id="btnAgregar">Agregar al carro
                                 <i class="bi bi-cart"></i>
                             </button>
-
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -73,7 +72,7 @@
 @section Scripts {
 
     <script>
-        $("#btnAgregar").click(function () {
+        $("#btnAgregar, #btnComprar").click(function () {
             let stock = document.getElementById("stockId").value;
             let cantidad = document.getElementById("cantidadId").value;
             if (cantidad.toString() == '' || cantidad < 1 || parseInt(cantidad) > parseInt(stock)) {

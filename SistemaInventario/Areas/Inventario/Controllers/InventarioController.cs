@@ -12,7 +12,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
 {
 
     [Area("Inventario")]
-    [Authorize(Roles = DefinicionesEstaticas.RoleAdmin + "," + DefinicionesEstaticas.RoleInventario)]
+    [Authorize(Roles = DS.RoleAdmin + "," + DS.RoleInventario)]
     public class InventarioController : Controller
     {
         private readonly IUnidadTrabajo unidadTrabajo;
@@ -95,12 +95,12 @@ namespace SistemaInventario.Areas.Inventario.Controllers
         {
             if (productoId.ToString() == "" || productoId == 0)
             {
-                TempData[DefinicionesEstaticas.Error] = $"Error: Seleccione un producto";
+                TempData[DS.Error] = $"Error: Seleccione un producto";
                 return RedirectToAction("DetalleInventario", new { id = inventarioId });
             }
             if (cantidadId.ToString() == "" || cantidadId < 1)
             {
-                TempData[DefinicionesEstaticas.Error] = $"Error: Ingrese una cantidad correcta";
+                TempData[DS.Error] = $"Error: Ingrese una cantidad correcta";
                 return RedirectToAction("DetalleInventario", new { id = inventarioId });
             }
 
@@ -218,7 +218,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
             inventario.FechaFinal = DateTime.Now;
             await unidadTrabajo.Guardar();
 
-            TempData[DefinicionesEstaticas.Exitosa] = "Stock Generado con éxito";
+            TempData[DS.Exitosa] = "Stock Generado con éxito";
 
             return RedirectToAction("Index");
 

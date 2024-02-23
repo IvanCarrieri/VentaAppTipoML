@@ -60,7 +60,7 @@
 
                         @* dropdowns *@
 
-                        @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin) || User.IsInRole(DefinicionesEstaticas.RoleInventario))
+                        @if (User.IsInRole(DS.RoleAdmin) || User.IsInRole(DS.RoleInventario))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,7 +68,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     @* con los tag-helpers le indicamos a que AREA debe ir, al CONTROLADOR que debe IR y a la ACCION que debe ir *@
-                                    @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin))
+                                    @if (User.IsInRole(DS.RoleAdmin))
                                     {
                                         <li><a class="dropdown-item" asp-area="Admin" asp-controller="Deposito" asp-action="Index">Depósitos</a></li>
                                         <li><a class="dropdown-item" asp-area="Admin" asp-controller="Categoria" asp-action="Index">Categorías</a></li>
@@ -84,7 +84,7 @@
 
                         }
 
-                        @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin))
+                        @if (User.IsInRole(DS.RoleAdmin))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -98,7 +98,7 @@
                             </li>
                         }
 
-                        @if (User.IsInRole(DefinicionesEstaticas.RoleAdmin) || User.IsInRole(DefinicionesEstaticas.RoleInventario))
+                        @if (User.IsInRole(DS.RoleAdmin) || User.IsInRole(DS.RoleInventario))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -113,12 +113,12 @@
                         }
 
 
-                        @if(httpContextAccessor.HttpContext.Session.GetInt32(DefinicionesEstaticas.SesionCarrito) != null)
+                        @if(httpContextAccessor.HttpContext.Session.GetInt32(DS.SesionCarrito) != null)
                         {
                             <li>
                                 <a asp-area="Inventario" asp-action="Index" asp-controller="Carrito" class="nav-link">
                                     @{
-                                        var numeroProductos =  httpContextAccessor.HttpContext.Session.GetInt32(DefinicionesEstaticas.SesionCarrito);
+                                        var numeroProductos =  httpContextAccessor.HttpContext.Session.GetInt32(DS.SesionCarrito);
                                     }
                                     <i class="bi bi-cart-fill text-black"> &nbsp;(@numeroProductos) </i>
                                 </a>

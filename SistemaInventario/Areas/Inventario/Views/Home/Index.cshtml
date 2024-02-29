@@ -6,64 +6,53 @@
 }
 
 
-
-<header class="header2">
-    <div class="container pt-sm-5">
-        <div class="heading-primary">
-            Bienvenidos a nuestra tienda. <br />
-            Los mejores productros los encontrarás aquí.
+ <header class="header2 bg-dark text-white py-5">
+        <div class="container text-center">
+            <h1 class="display-4">Bienvenidos a nuestra tienda</h1>
+            <p class="lead">Los mejores productos los encontrarás aquí.</p>
         </div>
-    </div>
-</header>
+ </header>
 
 <br />
 
-<section>
+<section class="my-5">
 
-    <div class="row col-lg-6 col-md-6 col-sm-6 d-flex" style="margin-left: 150px; margin-right: 150px;">
-
-        <div class="input-group mb-3">
-            <input id="search" type="text" class="form-control" value="@ViewBag.Busqueda" placeholder="Buscar" arial-label="Buscar" aria-describedby="button-addon2" />
-            <button class="btn btn-outline-primary" onclick="buscar()">
-                <i class="bi bi-search"></i>
-            </button>
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="input-group mb-3">
+                <input id="search" type="text" class="form-control" value="@ViewBag.Busqueda" placeholder="Buscar producto" aria-label="Buscar" aria-describedby="button-addon2">
+                <button class="btn btn-primary" onclick="buscar()">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
         </div>
-
     </div>
 
-
-
-    <div class="row" style="margin-left: 150px; margin-right: 150px;">
-
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4" style="margin-left: 15px; margin-right: 15px;">
         @foreach (var producto in ViewBag.Productos)
         {
-
-            <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-                <div class="card w-100 my-2">
-                    <img src="@DS.ImagenRuta@producto.ImagenUrl" class="card-img-top" style="aspect-ratio: 1/1" />
-                    <div class="card-body d-flex flex-column">
+            <div class="col">
+                <div class="card h-100 shadow">
+                    <img src="@DS.ImagenRuta@producto.ImagenUrl" class="card-img-top" alt="@producto.Descripcion">
+                    <div class="card-body">
                         <h5 class="card-title">@producto.Descripcion</h5>
-                        <p class="card-text">$ @String.Format("{0:#,##0.000}", producto.Precio)</p>
-                        <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto bg-white ">
-                            <a asp-action="Detalle" asp-route-id="@producto.Id" class="btn btn-outline-primary">
-                                <i class="bi bi-ticket-detailed"> Detalle</i>
-                            </a>
-                        </div>
+                        <p class="card-text">$ @producto.Precio.ToString("N2")</p>
                     </div>
-
+                    <div class="card-footer">
+                        <a asp-action="Detalle" asp-route-id="@producto.Id" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-ticket-detailed"></i> Detalle
+                        </a>
+                    </div>
                 </div>
-
             </div>
-
         }
-
     </div>
 
-
+    
 
     <div class="row" style="margin-left: 150px; margin-right: 150px;">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
+        <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
 
                 <li class="page-item @(ViewBag.Pagina == 1 ? "disabled" : "")">
                     <a class="page-link" href="@Url.Action("Index", new { pagina = ViewBag.Pagina - 1 })">Anterior</a>
@@ -79,16 +68,11 @@
                 <li class="page-item @(ViewBag.Pagina == ViewBag.TotalPaginas ? "disabled" : "")">
                     <a class="page-link" href="@Url.Action("Index", new { pagina = ViewBag.Pagina + 1 })">Siguiente</a>
                 </li>
-
-
             </ul>
         </nav>
     </div>
 
-
-
 </section>
-
 
 <script>
     function buscar() {
@@ -98,3 +82,4 @@
 </script>
 
 
+ 

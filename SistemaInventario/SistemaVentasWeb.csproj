@@ -29,9 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SistemaInventario.AccesoDatos\SistemaInventario.AccesoDatos.csproj" />
-    <ProjectReference Include="..\SistemaInventario.Modelos\SistemaInventario.Modelos.csproj" />
-    <ProjectReference Include="..\SistemaInventario.Utilidades\SistemaInventario.Utilidades.csproj" />
+    <ProjectReference Include="..\SistemaInventario.AccesoDatos\AccesoDatos.csproj" />
+    <ProjectReference Include="..\SistemaInventario.Modelos\Modelos.csproj" />
+    <ProjectReference Include="..\SistemaInventario.Utilidades\Utilidades.csproj" />
   </ItemGroup>
 
   <ItemGroup>

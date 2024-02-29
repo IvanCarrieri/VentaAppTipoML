@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WcXrtmFi1GkAEEw9kudfncvFOkWXTev+xcsKI6tOfQY=",
+  "Hash": "f4fuZ0oLxvsJyZa8hD2QazqmxXRey9BkFVsHIfzuQ0g=",
   "Source": "SistemaInventario",
   "BasePath": "_content/SistemaInventario",
   "Mode": "Default",
@@ -1231,6 +1231,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\navim\\Desktop\\NET CORE\\SistemaInventario\\SistemaInventario\\wwwroot\\Imagenes\\confirmacion.jpg",
+      "SourceId": "SistemaInventario",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\navim\\Desktop\\NET CORE\\SistemaInventario\\SistemaInventario\\wwwroot\\",
+      "BasePath": "_content/SistemaInventario",
+      "RelativePath": "Imagenes/confirmacion.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Imagenes\\confirmacion.jpg"
     },
     {
       "Identity": "C:\\Users\\navim\\Desktop\\NET CORE\\SistemaInventario\\SistemaInventario\\wwwroot\\Imagenes\\icon.ico",

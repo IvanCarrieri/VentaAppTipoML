@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\Imagenes\\Producto\\f274541b-af6c-42e5-8e53-25b608bcd529.JPG"
     },
     {
+      "Id": "C:\\Users\\navim\\Desktop\\NET CORE\\SistemaInventario\\SistemaInventario\\wwwroot\\Imagenes\\confirmacion.jpg",
+      "PackagePath": "staticwebassets\\Imagenes\\confirmacion.jpg"
+    },
+    {
       "Id": "C:\\Users\\navim\\Desktop\\NET CORE\\SistemaInventario\\SistemaInventario\\wwwroot\\Imagenes\\icon.ico",
       "PackagePath": "staticwebassets\\Imagenes\\icon.ico"
     },

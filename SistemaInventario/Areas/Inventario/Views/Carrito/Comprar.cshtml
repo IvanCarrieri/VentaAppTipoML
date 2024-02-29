@@ -25,7 +25,7 @@
                                         <label>Nombres</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="Orden.NombreCliente" type="text" class="form-control" />
+                                        <input asp-for="Orden.NombreCliente" type="text" class="form-control" id="nombresId"/>
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -33,7 +33,7 @@
                                         <label>Telefono</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="Orden.Telefono" type="text" class="form-control" />
+                                        <input asp-for="Orden.Telefono" type="text" class="form-control" id="telefonoId" />
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -41,7 +41,7 @@
                                         <label>Direccion</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="Orden.Direccion" type="text" class="form-control" />
+                                        <input asp-for="Orden.Direccion" type="text" class="form-control" id="direccionId"/>
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -49,7 +49,7 @@
                                         <label>Ciudad</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="Orden.Ciudad" type="text" class="form-control" />
+                                        <input asp-for="Orden.Ciudad" type="text" class="form-control" id="ciudadId" />
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -57,7 +57,7 @@
                                         <label>Pais</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="Orden.Pais" type="text" class="form-control" />
+                                        <input asp-for="Orden.Pais" type="text" class="form-control" id="paisId"/>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="col-12 col-md-4">
 
-                            <button type="submit" value="Realizar Pedido" class="btn btn-success form-control">Realizar Pedido</button>
+                            <button type="submit" value="Realizar Pedido" class="btn btn-success form-control" id="comprarId">Realizar Pedido</button>
                         </div>
                     </div>
                 </div>
@@ -111,4 +111,39 @@
     </div>
 </form>
 
+@section Scripts{
 
+    <script>
+
+        $("#comprarId").click(function () {
+
+            let nombresId = document.getElementById("nombresId").value;
+            let telefonoId = document.getElementById("telefonoId").value;
+            let direccionId = document.getElementById("direccionId").value;
+            let ciudadId = document.getElementById("ciudadId").value;
+            let paisId = document.getElementById("paisId").value;
+
+            if (nombresId == '') {
+                swal("Error", "Ingresar nombres", "error")
+            }
+            if (telefonoId == '') {
+                swal("Error", "Ingresar teléfono", "error")
+            }
+            if (direccionId == '') {
+                swal("Error", "Ingresar dirección", "error")
+            }
+            if (ciudadId == '') {
+                swal("Error", "Ingresar ciudad", "error")
+            }
+            if (paisId == '') {
+                swal("Error", "Ingresar pais", "error")
+            }
+
+        })
+
+    </script>
+
+
+
+
+}
